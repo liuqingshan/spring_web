@@ -3,17 +3,14 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>新建图书</title>
+    <title>编辑图书</title>
 </head>
 <body>
-  <h1>Book New</h1>
+  <h1>Book Edit</h1>
   <a href="<c:url value="/books" />">Books</a>
   <hr/>
-  <sf:form method="post" action="/books" acceptCharset="utf-8" commandName="book">
-      <div>
-        ISBN: <sf:input path="isbn" />
-          <sf:errors path="isbn"/>
-      </div>
+  <sf:form method="post" action="/books/${book.isbn}" acceptCharset="utf-8" commandName="book">
+      <input type="hidden" name="_method" value="put" />
       <div>
         Title: <sf:input path="name" />
           <sf:errors path="name" />

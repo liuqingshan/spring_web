@@ -13,7 +13,8 @@
       <span><c:out value="${book.name}" /></span>
       <span><c:out value="${book.isbn}" /></span>
       <span><c:out value="${book.price}" /></span>
-      <a href="<c:url value="/books/${book.isbn}" />"><c:out value="${book.isbn}"/></a>
+      <a href="<c:url value="/books/${book.isbn}" />">查看</a>
+      <a href="<c:url value="/books/${book.isbn}/edit" />">编辑</a>
       <sf:form method="post" action="/books/${book.isbn}">
           <input type="hidden" name="_method" value="DELETE"/>
           <input type="submit" value="Delete" />

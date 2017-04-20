@@ -5,9 +5,12 @@ import io.mz.models.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 public class BooksController {
@@ -30,14 +33,15 @@ public class BooksController {
     return "books/new";
   }
 
-  @RequestMapping(value = "/books/{isdn}", method = RequestMethod.GET)
-  public String show(@PathVariable("isdn") String isdn, Model model) {
-    model.addAttribute(dao.findBy(isdn));
+  @RequestMapping(value = "/books/{isbn}", method = RequestMethod.GET)
+  public String show(@PathVariable("isbn") String isbn, Model model) {
+    model.addAttribute(dao.findBy(isbn));
     return "books/show";
   }
 
   @RequestMapping(value = "/books", method = RequestMethod.POST)
-  public String create(Book book) {
+  public String create(@Valid Book book, Errors errors) {
+    if(errors.hasErrors())  return "books/new";
     dao.save(book);
     return "redirect:/books";
   }
@@ -45,6 +49,19 @@ public class BooksController {
   @RequestMapping(value = "/books/{isbn}", method = RequestMethod.DELETE)
   public String destroy(@PathVariable("isbn") String isbn) {
     dao.destroy(isbn);
+    return "redirect:/books";
+  }
+
+  @RequestMapping(value = "/books/{isbn}/edit", method = RequestMethod.GET)
+  public String edit(@PathVariable("isbn") String isbn, Model model) {
+    model.addAttribute(dao.findBy(isbn));
+    return "books/edit";
+  }
+
+  @RequestMapping(value = "/books/{isbn}", method = RequestMethod.PUT)
+  public String update(@PathVariable("isbn") String isbn, @Valid Book book, Errors errors) {
+    if(errors.hasErrors())  return "books/edit";
+    dao.update(isbn, book);
     return "redirect:/books";
   }
 }

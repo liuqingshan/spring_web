@@ -22,7 +22,9 @@ public class BookDaoImpl implements BookDao {
        return books.values();
     }
 
-    public Book build() { return new Book(); }
+    public Book build() {
+        return new Book();
+    }
 
     public Book findBy(String isbn) {
       return books.get(isbn);
@@ -37,6 +39,12 @@ public class BookDaoImpl implements BookDao {
     public boolean destroy(String isbn) {
       if(!books.containsKey(isbn)) return false;
       books.remove(isbn);
+      return true;
+    }
+
+    public boolean update(String isbn, Book book) {
+      if(!books.containsKey(isbn)) return false;
+      books.put(isbn, book);
       return true;
     }
 }

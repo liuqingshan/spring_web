@@ -2,11 +2,26 @@ package io.mz.models;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.format.annotation.NumberFormat;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Book {
+
+   @NotNull
+   @Size(min=1, max=20)
    private String name;
+
+   @NotNull
+   @Size(min=10, max=20)
    private String isbn;
-   private double price;
+
+   @NotNull
+   @NumberFormat(style = NumberFormat.Style.CURRENCY)
+   @Digits(integer = 8, fraction = 2)
+   private double price = 0;
 
    public Book() {
 

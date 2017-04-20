@@ -15,4 +15,6 @@ public interface BookDao {
   boolean save(Book book);
 
   boolean destroy(String isbn);
+
+  boolean update(String isbn, Book book);
 }
